@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOREVERNESS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        // Suppress Tailwind Play CDN warning (safe for GitHub Pages production)
+        const originalWarn = console.warn;
+        console.warn = (...args) => {
+            if (!args[0] || typeof args[0] !== 'string' || !args[0].includes('cdn.tailwindcss.com')) {
+                originalWarn.apply(console, args);
+            }
+        };
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&amp;family=Playfair+Display:wght@700&amp;display=swap');
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .heading-serif {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        .section-header {
+            font-size: 2.75rem;
+            line-height: 1.1;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
+
+        .art-grid img {
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .art-grid img:hover {
+            transform: scale(1.015);
+        }
+
+        .tessellation-bg {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            animation: subtle-shift 25s linear infinite;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes subtle-shift {
+            0% { background-position: 0 0; }
+            100% { background-position: 60px 60px; }
+        }
+
+        .escher-pattern {
+            position: absolute;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 25% 25%, rgba(255,255,255,0.04) 1px, transparent 2px),
+                radial-gradient(circle at 75% 75%, rgba(255,255,255,0.04) 1px, transparent 2px);
+            background-size: 80px 80px;
+            animation: escher-drift 40s linear infinite;
+            z-index: 1;
+            opacity: 0.6;
+        }
+
+        .nav-link {
+            position: relative;
+            transition: color 0.2s ease;
+        }
+        
+        .nav-link:hover {
+            color: #fff;
+        }
+        
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #fff;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover:after {
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-black text-white">
+    
+    <!-- NAV -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-lg border-b border-white/10">
+        <div class="max-w-screen-2xl mx-auto px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-x-12">
+                <!-- Logo -->
+                <div class="flex items-center gap-x-3">
+                    <div class="w-8 h-8 rounded-full border border-white/40 flex items-center justify-center">
+                        <span class="text-lg font-light tracking-[3px]">F</span>
+                    </div>
+                    <span class="font-semibold text-2xl tracking-tight">FOREVERNESS</span>
+                </div>
+                
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex items-center gap-x-9 text-sm tracking-[1px]">
+                    <a href="#paintings" class="nav-link text-white/70 hover:text-white">PAINTINGS</a>
+                    <a href="#booking" class="nav-link text-white/70 hover:text-white">BOOKING</a>
+                </div>
+            </div>
+            
+            <!-- Social Links -->
+            <div class="flex items-center gap-x-6 text-lg">
+                <a href="https://www.instagram.com/iamforeverness/" target="_blank" class="text-white/70 hover:text-white transition">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="https://linktr.ee/iamforeverness" target="_blank" class="text-white/70 hover:text-white transition">
+                    <i class="fa-solid fa-link"></i>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <header class="relative h-screen flex items-center justify-center overflow-hidden bg-black">
+        <!-- Stronger Animated Tessellation (more prominent + dynamic) -->
+        <canvas id="tessellation-canvas" class="absolute inset-0 w-full h-full"></canvas>
+        
+        <!-- Stronger contrast overlay -->
+        <div class="absolute inset-0 bg-gradient-to-b from-black/75 via-black/65 to-black/85 z-10"></div>
+        
+        <div class="relative z-20 text-center px-6 max-w-4xl mx-auto">
+            <div class="mb-6">
+                <span class="inline-block px-4 py-1 text-xs tracking-[3px] border border-white/30 rounded-full">DJ • PRODUCER • VISUAL ARTIST</span>
+            </div>
+            
+            <h1 class="heading-serif text-[92px] md:text-[120px] leading-none tracking-tighter mb-6 text-white">FOREVERNESS</h1>
+            
+            <div class="mt-12 flex justify-center gap-x-4">
+                <a href="#music" 
+                   class="px-10 py-4 border border-white/40 hover:bg-white hover:text-black transition text-sm tracking-[2px]">
+                    LISTEN
+                </a>
+                <a href="#booking" 
+                   class="px-10 py-4 bg-white text-black text-sm tracking-[2px] hover:bg-white/90 transition">
+                    BOOK
+                </a>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-12 left-1/2 -translate-x-1/2 text-xs tracking-[3px] text-white/50 flex flex-col items-center z-20">
+            SCROLL TO BEGIN
+            <i class="fa-solid fa-chevron-down mt-2 animate-bounce"></i>
+        </div>
+    </header>
+
+    <!-- ART TEASER (images only visible on Art page) -->
+    <section class="max-w-screen-2xl mx-auto px-8 py-20 border-b border-white/10 text-center">
+        <div class="max-w-md mx-auto">
+            <div class="text-xs tracking-[3px] text-white/50 mb-4">VISUAL WORK</div>
+            <h2 class="text-4xl tracking-tighter mb-8">Visual work</h2>
+            
+            <a href="art.html" 
+               class="inline-block px-12 py-4 border border-white/40 hover:bg-white hover:text-black transition text-sm tracking-[2px]">
+                ENTER THE ART ARCHIVE
+            </a>
+        </div>
+    </section>
+
+    <!-- MUSIC SECTION -->
+    <section id="music" class="max-w-screen-2xl mx-auto px-8 py-20 border-b border-white/10">
+        <div class="max-w-3xl mb-10">
+            <h2 class="section-header tracking-tighter">Music</h2>
+        </div>
+        
+        <!-- Auto-updating SoundCloud (foreverness-2) -->
+        <div class="max-w-3xl">
+            <div class="bg-zinc-950 border border-white/10 rounded-2xl p-1">
+                <iframe width="100%" height="500" scrolling="no" frameborder="no" 
+                        src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/foreverness-2&amp;color=%23ffffff&amp;auto_play=false&amp;show_artwork=true&amp;show_user=true"></iframe>
+            </div>
+            <div class="text-xs text-white/50 mt-3 text-center">
+                New sets appear automatically when uploaded to SoundCloud
+            </div>
+        </div>
+        
+        <!-- Platform Icons -->
+        <div class="mt-12 flex flex-wrap gap-x-8 gap-y-4 text-xl justify-center text-white/60">
+            <a href="https://www.residentadvisor.net/dj/foreverness" target="_blank" class="hover:text-white transition"><i class="fa-brands fa-soundcloud"></i> RA</a>
+            <a href="https://open.spotify.com/artist/foreverness" target="_blank" class="hover:text-white transition"><i class="fa-brands fa-spotify"></i></a>
+            <a href="https://soundcloud.com/foreverness-2" target="_blank" class="hover:text-white transition"><i class="fa-brands fa-soundcloud"></i></a>
+            <a href="https://bandcamp.com/foreverness" target="_blank" class="hover:text-white transition"><i class="fa-brands fa-bandcamp"></i></a>
+            <a href="https://music.apple.com/artist/foreverness" target="_blank" class="hover:text-white transition"><i class="fa-brands fa-apple"></i></a>
+        </div>
+    </section>
+
+    <!-- (Bio moved to Press page) -->
+
+    <!-- BOOKING SECTION -->
+    <section id="booking" class="max-w-screen-2xl mx-auto px-8 py-24">
+        <div class="grid md:grid-cols-12 gap-x-12 items-center">
+            
+            <div class="md:col-span-5">
+                <h2 class="section-header tracking-tighter mb-8">Bookings</h2>
+                
+                <div class="mb-10">
+                    <div class="text-xs tracking-[2px] text-white/50 mb-4">UPCOMING DATES</div>
+                    <div class="space-y-4 text-sm">
+                        <div class="flex justify-between border-b border-white/10 pb-3">
+                            <div>28 FEB — BERLIN</div>
+                            <div class="text-white/50">Kater Blau</div>
+                        </div>
+                        <div class="flex justify-between border-b border-white/10 pb-3">
+                            <div>14 MAR — BARCELONA</div>
+                            <div class="text-white/50">Razzmatazz</div>
+                        </div>
+                        <div class="flex justify-between border-b border-white/10 pb-3">
+                            <div>04 APR — LISBON</div>
+                            <div class="text-white/50">Lux Frágil</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-sm text-white/70">
+                    For private rituals, commissions, or festival bookings, use the form.
+                </div>
+            </div>
+            
+            <div class="md:col-span-6 mt-12 md:mt-0">
+                <div class="bg-zinc-950 border border-white/10 rounded-3xl p-10">
+                    <form class="space-y-6">
+                        <div>
+                            <label class="block text-xs tracking-[2px] text-white/50 mb-2">YOUR NAME</label>
+                            <input type="text" class="w-full bg-transparent border-b border-white/20 py-3 text-lg focus:outline-none placeholder:text-white/30" placeholder="Alex Rivera">
+                        </div>
+                        <div>
+                            <label class="block text-xs tracking-[2px] text-white/50 mb-2">EMAIL</label>
+                            <input type="email" class="w-full bg-transparent border-b border-white/20 py-3 text-lg focus:outline-none placeholder:text-white/30" placeholder="you@studio.com">
+                        </div>
+                        <div>
+                            <label class="block text-xs tracking-[2px] text-white/50 mb-2">EVENT / PROJECT</label>
+                            <textarea class="w-full bg-transparent border-b border-white/20 py-3 text-lg focus:outline-none placeholder:text-white/30 resize-y min-h-[80px]" placeholder="Describe your event or commission"></textarea>
+                        </div>
+                        
+                        <button type="button" 
+                                class="w-full mt-6 py-4 bg-white text-black font-medium tracking-[1.5px] text-sm hover:bg-white/90 transition">
+                            SEND INQUIRY
+                        </button>
+                        
+                        <div class="text-center text-xs text-white/40 pt-4">
+                            I usually reply within 48 hours.
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-white/10 py-16">
+        <div class="max-w-screen-2xl mx-auto px-8 text-center text-sm text-white/50">
+            <div class="flex justify-center gap-x-8 mb-8 text-lg">
+                <a href="https://www.instagram.com/iamforeverness/" class="hover:text-white transition"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://linktr.ee/iamforeverness" class="hover:text-white transition"><i class="fa-solid fa-link"></i></a>
+            </div>
+            
+            <div>© FOREVERNESS 2026 — CRAFTED WITH RESPECT FOR THE LINEAGE</div>
+        </div>
+    </footer>
+
+    <script>
+        // Animated Tessellation Canvas - M.C. Escher / Bee Hexagon Style
+        function initTessellation() {
+            const canvas = document.getElementById('tessellation-canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            let time = 0;
+            let phase = 0;
+            
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+            
+            function drawHexagon(x, y, size, rotation, opacity, phaseShift) {
+                ctx.save();
+                ctx.translate(x, y);
+                ctx.rotate(rotation + phaseShift);
+                ctx.beginPath();
+                
+                for (let i = 0; i < 6; i++) {
+                    const angle = (Math.PI / 3) * i;
+                    const px = Math.cos(angle) * size;
+                    const py = Math.sin(angle) * size;
+                    if (i === 0) ctx.moveTo(px, py);
+                    else ctx.lineTo(px, py);
+                }
+                ctx.closePath();
+                
+                // Stronger contrast
+                ctx.strokeStyle = `rgba(255,255,255,${opacity})`;
+                ctx.lineWidth = 2.5;
+                ctx.stroke();
+                
+                // Inner geometric detail
+                ctx.beginPath();
+                ctx.arc(0, 0, size * 0.42, 0, Math.PI * 2);
+                ctx.stroke();
+                
+                ctx.restore();
+            }
+            
+            function animate() {
+                ctx.fillStyle = '#000000';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                const hexSize = 42;
+                const spacing = hexSize * 1.85;
+                const rows = Math.ceil(canvas.height / spacing) + 3;
+                const cols = Math.ceil(canvas.width / spacing) + 3;
+                
+                time += 0.012;
+                phase = (phase + 0.0008) % (Math.PI * 2);
+                
+                for (let row = -2; row < rows; row++) {
+                    for (let col = -2; col < cols; col++) {
+                        const offsetX = (row % 2) * (spacing * 0.5);
+                        const x = col * spacing + offsetX;
+                        const y = row * spacing * 0.866;
+                        
+                        const dist = Math.sqrt(Math.pow(x - canvas.width/2, 2) + Math.pow(y - canvas.height/2, 2));
+                        
+                        // More dynamic pulse and rotation
+                        const pulse = 0.75 + Math.sin(time * 2.2 + dist * 0.006) * 0.35;
+                        const rot = Math.sin(time * 0.9 + col * 0.4) * 0.12 + phase * 0.3;
+                        const op = 0.45 + Math.sin(time * 1.8 + col + row) * 0.35;
+                        
+                        drawHexagon(x, y, hexSize * pulse, rot, op, phase * 0.5);
+                        
+                        // Moving bees (more prominent)
+                        if ((col + row) % 4 === 0) {
+                            const bx = x + Math.cos(time * 1.1 + col) * hexSize * 0.55;
+                            const by = y + Math.sin(time * 0.95 + row) * hexSize * 0.48;
+                            
+                            ctx.fillStyle = `rgba(255,255,255,${0.85 * pulse})`;
+                            ctx.beginPath();
+                            ctx.arc(bx, by, 3.5, 0, Math.PI * 2);
+                            ctx.fill();
+                            
+                            // Wings
+                            ctx.strokeStyle = `rgba(255,255,255,${0.5 * pulse})`;
+                            ctx.lineWidth = 1.2;
+                            ctx.beginPath();
+                            ctx.moveTo(bx - 6, by - 2);
+                            ctx.lineTo(bx + 6, by - 2);
+                            ctx.stroke();
+                        }
+                    }
+                }
+                
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+        }
+        
+        // Initialize everything
+        window.onload = function() {
+            initTessellation();
+        };
+        
+        console.log('%c[FOREVERNESS] Minimal site with animated tessellation loaded.', 'color:#666');
+    </script>
+</body>
+</html>

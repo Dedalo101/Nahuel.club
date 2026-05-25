@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FOREVERNESS — Press</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script>
+        // Suppress Tailwind Play CDN warning (safe for GitHub Pages production)
+        const originalWarn = console.warn;
+        console.warn = (...args) => {
+            if (!args[0] || typeof args[0] !== 'string' || !args[0].includes('cdn.tailwindcss.com')) {
+                originalWarn.apply(console, args);
+            }
+        };
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&amp;family=Playfair+Display:wght@700&amp;display=swap');
+        body { font-family: 'Inter', system_ui, sans-serif; }
+        .heading-serif { font-family: 'Playfair Display', Georgia, serif; font-weight: 700; letter-spacing: -0.02em; }
+        
+        .math-bg {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background: #000;
+        }
+    </style>
+</head>
+<body class="bg-black text-white">
+    <!-- Never-repeating mathematical background -->
+    <canvas id="math-canvas" class="fixed inset-0 z-[-1]"></canvas>
+    
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-lg border-b border-white/10">
+        <div class="max-w-screen-2xl mx-auto px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-x-3">
+                <div class="w-8 h-8 rounded-full border border-white/40 flex items-center justify-center">
+                    <span class="text-lg font-light tracking-[3px]">F</span>
+                </div>
+                <a href="index.html" class="font-semibold text-2xl tracking-tight">FOREVERNESS</a>
+            </div>
+            <a href="index.html" class="text-sm tracking-[1.5px] hover:text-white/70 transition">BACK TO HOME</a>
+        </div>
+    </nav>
+    
+    <div class="pt-20 max-w-screen-2xl mx-auto px-8 py-16">
+        <div class="max-w-2xl">
+            <h1 class="heading-serif text-7xl tracking-tighter">Press</h1>
+            
+            <!-- BIO -->
+            <div class="mt-16 max-w-prose">
+                <div class="prose prose-invert text-lg text-white/90">
+                    <p>Foreverness is the project of Julián M. Camós, born in Argentina but most likely a citizen of the world after living in places like New York, California and many other cities before setting in Málaga.</p>
+                    <p class="mt-6">Julián knows how to express his life experiences through sound. He crafts musical journeys filled with melodies and atmospheres without relying solely on vocals, bringing sets full of personality, peculiarity and authenticity to the decks.</p>
+                    <p class="mt-6">With a decade and a half of merging with the industry he has carved his own niche in Southern Spain. This last couple of years he has been focused on a new project as a DJ and producer duo, Blank Canvas, in which he spends most of his time in the studio without stepping away from the DJ booths in the area. In addition, he was one of the main pillars behind the birth of the famous and recognizable “Malacitana” Métrica Music.</p>
+                </div>
+            </div>
+            
+            <!-- (Old bio removed) -->
+            
+            <!-- Press Kit -->
+            <div class="mt-20">
+                <div class="uppercase tracking-[3px] text-xs text-white/50 mb-6">PRESS KIT</div>
+                
+                <div class="space-y-4">
+                    <a href="#" class="flex items-center justify-between group border border-white/20 hover:border-white/60 px-8 py-5 rounded-2xl transition">
+                        <div>
+                            <div class="font-semibold">High-Resolution Press Photos</div>
+                            <div class="text-xs text-white/50">ZIP • 48MB</div>
+                        </div>
+                        <i class="fa-solid fa-download text-xl group-hover:scale-110 transition"></i>
+                    </a>
+                    
+                    <a href="#" class="flex items-center justify-between group border border-white/20 hover:border-white/60 px-8 py-5 rounded-2xl transition">
+                        <div>
+                            <div class="font-semibold">Full Bio (English)</div>
+                            <div class="text-xs text-white/50">PDF • 2 pages</div>
+                        </div>
+                        <i class="fa-solid fa-download text-xl group-hover:scale-110 transition"></i>
+                    </a>
+                    
+                    <a href="#" class="flex items-center justify-between group border border-white/20 hover:border-white/60 px-8 py-5 rounded-2xl transition">
+                        <div>
+                            <div class="font-semibold">Technical Rider</div>
+                            <div class="text-xs text-white/50">PDF • 4 pages</div>
+                        </div>
+                        <i class="fa-solid fa-download text-xl group-hover:scale-110 transition"></i>
+                    </a>
+                </div>
+                
+                <div class="mt-10 text-xs text-white/50">
+                    For press inquiries: <a href="mailto:press@foreverness.club" class="underline">press@foreverness.club</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="border-t border-white/10 py-12 text-center text-xs text-white/50">
+        © FOREVERNESS — ALL RIGHTS PRESERVED
+    </footer>
+
+    <script>
+        // Never-repeating mathematical pattern (inspired by the circular bat tessellation)
+        function initMathBackground() {
+            const canvas = document.getElementById('math-canvas');
+            if (!canvas) return;
+            
+            const ctx = canvas.getContext('2d');
+            let time = 0;
+            
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+            
+            function draw() {
+                ctx.fillStyle = '#000000';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                const cx = canvas.width / 2;
+                const cy = canvas.height / 2;
+                const maxRadius = Math.min(canvas.width, canvas.height) * 0.48;
+                
+                time += 0.008;
+                
+                // Central morphing rings
+                for (let r = 0; r < 8; r++) {
+                    const radius = maxRadius * (0.15 + r * 0.11);
+                    const rot = time * (0.3 + r * 0.07) * (r % 2 === 0 ? 1 : -1);
+                    const points = 12 + r * 2;
+                    
+                    ctx.strokeStyle = `rgba(255,255,255,${0.6 - r * 0.06})`;
+                    ctx.lineWidth = 1.5 - r * 0.1;
+                    
+                    ctx.save();
+                    ctx.translate(cx, cy);
+                    ctx.rotate(rot);
+                    
+                    ctx.beginPath();
+                    for (let i = 0; i <= points; i++) {
+                        const angle = (i / points) * Math.PI * 2;
+                        const rMod = radius * (1 + Math.sin(time * 1.5 + i + r) * 0.08);
+                        const x = Math.cos(angle) * rMod;
+                        const y = Math.sin(angle) * rMod;
+                        if (i === 0) ctx.moveTo(x, y);
+                        else ctx.lineTo(x, y);
+                    }
+                    ctx.closePath();
+                    ctx.stroke();
+                    
+                    ctx.restore();
+                }
+                
+                // Moving mathematical points
+                for (let i = 0; i < 18; i++) {
+                    const angle = time * (0.4 + i * 0.02) + i;
+                    const rad = maxRadius * (0.3 + Math.sin(time + i) * 0.25);
+                    const x = cx + Math.cos(angle) * rad;
+                    const y = cy + Math.sin(angle * 1.1) * rad * 0.7;
+                    
+                    ctx.fillStyle = `rgba(255,255,255,${0.7 + Math.sin(time * 2 + i) * 0.3})`;
+                    ctx.beginPath();
+                    ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                
+                requestAnimationFrame(draw);
+            }
+            
+            draw();
+        }
+        
+        window.onload = initMathBackground;
+    </script>
+</body>
+</html>
