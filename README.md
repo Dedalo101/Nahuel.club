@@ -1,10 +1,9 @@
-I’m Nahuel — DJ, vinyl collector, and passionate explorer of electronic music.
-Here on SoundCloud you’ll find selected sets and mixes, but the main content is available on my YouTube channel, where I regularly upload vinyl-only sessions and recordings of artists from the underground scene.
+Nahuel
+Passionate electronic music lover and vinyl collector. This channel features DJ sets by myself and other artists from the underground scene. The main focus is on vinyl sessions, but I’m also open to recording artists who mix digitally. The goal of this channel is to share quality music and support the artists who keep the underground culture alive.
 
-My goal is to share quality music, document the culture, and support the artists who keep the underground alive — whether they play strictly vinyl or mix digitally.
+If you’d like to collaborate or record a session with me, feel free to contact me via Instagram
 
-Discover more sets and full sessions on YouTube, The channel is a personal project where I record and document DJ sessions — both my own and invited artists from the local underground scene. I handle the recording, audio capture and visual setup, aiming to present each session with a clean and professional booth aesthetic.
+ES: 
+Soy Nahuel, un apasionado de la música electrónica y coleccionista de vinilos. En este canal encontrarás sesiones de DJ realizadas por mí y por otros artistas de la escena underground. El enfoque principal son las sesiones en vinilo, aunque también estoy abierto a grabar a artistas que mezclen en formato digital. El objetivo de este canal es compartir música de calidad y apoyar a quienes mantienen viva la cultura underground.
 
-The focus is mainly on vinyl-based sets, long-form mixing and thoughtful selection within house, minimal and techno. The intention is simple: create a consistent space where DJs can showcase their sound in a well-recorded, distraction-free format.
-
-If you’re a DJ and feel your selection fits this approach, you’re welcome to get in touch via Instagram.
+Si deseas colaborar o grabar una sesión conmigo, puedes contactarme a través de Instagram
