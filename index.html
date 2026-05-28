@@ -80,16 +80,16 @@
 
         .heading-serif {
             font-family: 'Playfair Display', Georgia, serif;
-            font-weight: 700;
-            letter-spacing: -0.02em;
+               @media (max-width: 639px) {          /* ← this line is currently nested wrongly */
+        #tessellation-canvas {
+            opacity: 0.9;
+            mix-blend-mode: screen;
         }
-
-        /* Fluid hero title: scales cleanly from ~320px to 1400px+ */
-        .hero-title {
-            font-size: clamp(2.4rem, 13vw, 9rem);
-            line-height: 1;
-            letter-spacing: -0.03em;
+        
+        .fixed.inset-0.z-\[-1\] {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.45), rgba(0,0,0,0.35), #6B2D8B);
         }
+    }
 
         /* Fluid section headings */
         .section-header {
