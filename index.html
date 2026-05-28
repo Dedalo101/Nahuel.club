@@ -157,6 +157,16 @@
             max-height: 90vh;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
+            @media (max-width: 639px) {
+    #tessellation-canvas {
+        opacity: 0.9;           /* slight boost */
+        mix-blend-mode: screen; /* makes the lavender pop more against black */
+    }
+    
+    .fixed.inset-0.z-\[-1\] {   /* the gradient overlay */
+        background: linear-gradient(to bottom, rgba(0,0,0,0.45), rgba(0,0,0,0.35), #6B2D8B);
+    }
+}
         }
     </style>
 </head>
@@ -454,26 +464,28 @@
             setTimeout(() => toast.classList.remove('show'), 3500);
         }
 
-        /* ── CANVAS TESSELLATION ──
-           Movement & wave behaviour preserved from original.
-           hexSize scales down on mobile for perf.
-           visibilitychange fully stops the rAF loop when tab is hidden. */
+        /* ── CANVAS TESSELLATION (mobile-optimized visibility) ── */
         function initTessellation() {
             const canvas = document.getElementById('tessellation-canvas');
             if (!canvas) return;
-            const ctx = canvas.getContext('2d');
+            const ctx = canvas.getContext('2d', { alpha: true });
             let time = 0, phase = 0, rafId = null;
 
             function getHexSize() {
-                // Smaller hexagons on mobile = fewer draw calls = better perf
-                return window.innerWidth < 640 ? 28 : 42;
+                return window.innerWidth < 640 ? 26 : 42;   // slightly smaller on mobile for clarity
             }
 
             function resize() {
-                canvas.width  = window.innerWidth;
-                canvas.height = window.innerHeight;
+                const dpr = Math.min(window.devicePixelRatio || 1, 2);
+                canvas.width  = Math.floor(window.innerWidth * dpr);
+                canvas.height = Math.floor(window.innerHeight * dpr);
+                canvas.style.width  = window.innerWidth + 'px';
+                canvas.style.height = window.innerHeight + 'px';
+                ctx.scale(dpr, dpr);
             }
+
             window.addEventListener('resize', resize);
+            window.addEventListener('orientationchange', () => setTimeout(resize, 150));
             resize();
 
             function drawHexagon(x, y, size, rotation, opacity, phaseShift) {
@@ -488,9 +500,15 @@
                     if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
                 }
                 ctx.closePath();
-                ctx.strokeStyle = `rgba(255,255,255,${opacity})`;
-                ctx.lineWidth = window.innerWidth < 640 ? 1.5 : 2.5;
+
+                // Mobile: brighter + thicker for visibility
+                const isMobile = window.innerWidth < 640;
+                ctx.strokeStyle = isMobile 
+                    ? `rgba(230, 220, 255, ${opacity + 0.25})`   // soft lavender on mobile
+                    : `rgba(255, 255, 255, ${opacity})`;
+                ctx.lineWidth = isMobile ? 2.2 : 2.8;
                 ctx.stroke();
+
                 ctx.beginPath();
                 ctx.arc(0, 0, size * 0.42, 0, Math.PI * 2);
                 ctx.stroke();
@@ -514,12 +532,11 @@
                         const offsetX = (row % 2) * (spacing * 0.5);
                         const x = col * spacing + offsetX;
                         const y = row * spacing * 0.866;
-                        // Spatial wave: each hex gets a unique phase offset from its grid position
                         const wave  = col * 0.4 + row * 0.7;
                         const pulse = 0.75 + Math.sin(time * 2.2 + wave) * 0.35;
                         const rot   = Math.sin(time * 0.9 + wave * 0.5) * 0.12 + phase * 0.3;
-                        const op    = 0.45 + Math.sin(time * 1.8 + wave) * 0.35;
-                        drawHexagon(x, y, hexSize * pulse, rot, op, phase * 0.5);
+                        const op    = (window.innerWidth < 640 ? 0.62 : 0.48) + Math.sin(time * 1.8 + wave) * 0.32;
+                        drawHexagon(x, y, hexSize * pulse, rot, Math.min(op, 0.95), phase * 0.5);
                     }
                 }
                 rafId = requestAnimationFrame(animate);
