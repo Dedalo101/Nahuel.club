@@ -277,11 +277,11 @@
             <div class="mb-12 sm:mb-16">
                 <h2 class="section-header tracking-tighter mb-6 sm:mb-8 glitch-text">Music</h2>
                 
-                <!-- YouTube Uploads (auto-updates with latest videos) -->
+                <!-- YouTube Uploads (auto-updates + auto-starts muted) -->
                 <div class="mx-auto w-full max-w-[820px]">
                     <div class="bg-zinc-950 border border-white/10 rounded-3xl p-3 overflow-hidden shadow-2xl">
                         <div class="flex items-center justify-between mb-3 px-1">
-                            <div class="text-xs tracking-[2px] text-white/50">LATEST FROM YOUTUBE</div>
+                            <div class="text-xs tracking-[2px] text-white/50">LATEST FROM YOUTUBE — PLAYING NOW</div>
                             <a href="https://www.youtube.com/@nahuelmendezDJ/videos" target="_blank" 
                                class="text-xs text-white/70 hover:text-white transition flex items-center gap-1">
                                 VIEW ALL <i class="fa-brands fa-youtube ml-1"></i>
@@ -290,12 +290,13 @@
                         <iframe 
                             width="100%" 
                             height="480" 
-                            src="https://www.youtube.com/embed?listType=playlist&list=UUJMdRqIF7A7jC3OP2ElKTkw" 
+                            src="https://www.youtube.com/embed?listType=playlist&list=UUJMdRqIF7A7jC3OP2ElKTkw&autoplay=1&mute=1" 
                             frameborder="0" 
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                             allowfullscreen
                             class="rounded-2xl">
                         </iframe>
+                        <div class="text-[10px] text-white/40 mt-2 text-center">Autoplays muted — click the player to unmute</div>
                     </div>
                 </div>
             </div>
