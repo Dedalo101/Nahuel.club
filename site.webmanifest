@@ -1,28 +1,24 @@
 {
-  "name": "NAHUEL — DJ • Producer • Visual Artist",
-  "short_name": "NAHUEL",
-  "description": "Immersive sonic rituals, vinyl DJ sets and geometric visuals by Nahuel Mendez. Underground electronic music from Berlin, Amsterdam & Barcelona.",
+  "name": "Nahuel | DJ • Promoter • Selector • Art Director",
+  "short_name": "Nahuel",
+  "description": "Official site of Nahuel — DJ, promoter, selector and art director. Bookings, visual work, music, and upcoming dates.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#000000",
-  "theme_color": "#000000",
-  "lang": "en",
-  "dir": "ltr",
-  "scope": "/",
+  "theme_color": "#ffffff",
   "icons": [
     {
-      "src": "android-chrome-192x192.png",
+      "src": "/android-chrome-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any"
+      "purpose": "any maskable"
     },
     {
-      "src": "android-chrome-512x512.png",
+      "src": "/android-chrome-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
-  ],
-  "categories": ["music", "entertainment", "art"],
-  "orientation": "any"
+  ]
 }
