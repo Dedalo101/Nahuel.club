@@ -412,12 +412,12 @@
       <div class="space-y-4 text-left text-sm">
         <a href="buymeacoffee.com/Dedalo101" target="_blank"
            class="block px-5 sm:px-6 py-3 border border-white/20 hover:bg-white hover:text-black rounded-2xl transition">
-          <strong>Support Dedalo101@GlueRecords</strong><br>
+          <strong>Support GlueRecords</strong><br>
           <span class="text-xs text-white/50">GitHub Sponsors &amp; Funding</span>
         </a>
-        <a href="https://github.com/Dedalo101" target="_blank"
+        <a href="buymeacoffee.com/Dedalo101" target="_blank"
            class="block px-5 sm:px-6 py-3 border border-white/20 hover:bg-white hover:text-black rounded-2xl transition">
-          <strong>Dedalo101 on GitHub</strong>
+          <strong>Buy Us Coffe</strong>
         </a>
       </div>
       <div class="mt-6 text-xs text-white/60 border-t border-white/10 pt-4">
@@ -491,12 +491,12 @@
       const error   = document.getElementById('form-error');
       if (!name || !email || !message) { error.classList.remove('hidden'); return; }
       error.classList.add('hidden');
-      // TODO: wire up real backend →
-      // fetch('https://formspree.io/f/YOUR_ID', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ name, email, message })
-      // });
+     
+      fetch('https://formspree.io/f/xvzylezv', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, message })
+      });
       document.getElementById('f-name').value    = '';
       document.getElementById('f-email').value   = '';
       document.getElementById('f-message').value = '';
