@@ -302,7 +302,7 @@
             <div class="relative w-full" style="padding-bottom:56.25%;">
               <iframe
                 class="absolute inset-0 w-full h-full rounded-2xl"
-                src="https://www.youtube.com/embed?listType=playlist&list=UUJMdRqIF7A7jC3OP2ElKTkw&autoplay=1&mute=0"
+                src="https://www.youtube.com/embed?listType=playlist&list=UUJMdRqIF7A7jC3OP2ElKTkw&autoplay=1&mute=1"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowfullscreen
@@ -427,61 +427,47 @@
       <div class="mt-4 text-xs text-white/50">Tap outside to close</div>
     </div>
   </div>
-<div id="survey-modal" onclick="hideSurveyModal()"
-     class="hidden fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4 sm:p-6">
-  <div onclick="event.stopImmediatePropagation()"
-       class="modal-inner bg-zinc-950 border border-white/20 rounded-2xl sm:rounded-3xl p-6 sm:p-10 max-w-lg w-full">
-    <h3 class="text-xl sm:text-2xl tracking-tight mb-6 sm:mb-8 text-center">Quick Feedback Survey</h3>
 
-    <form action="https://formspree.io/f/mqejnrlr" method="POST" class="space-y-6 sm:space-y-8">
-
-      <div>
-        <label class="block text-sm text-white/70 mb-3">Your email:</label>
-        <input type="email" name="email" required
-          class="w-full bg-black border border-white/30 rounded-2xl px-4 sm:px-5 py-3 text-white focus:outline-none text-sm"
-          placeholder="you@example.com">
+  <div id="survey-modal" onclick="hideSurveyModal()"
+       class="hidden fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4 sm:p-6">
+    <div onclick="event.stopImmediatePropagation()"
+         class="modal-inner bg-zinc-950 border border-white/20 rounded-2xl sm:rounded-3xl p-6 sm:p-10 max-w-lg w-full">
+      <h3 class="text-xl sm:text-2xl tracking-tight mb-6 sm:mb-8 text-center">Quick Feedback Survey</h3>
+      <div class="space-y-6 sm:space-y-8">
+        <div>
+          <label class="block text-sm text-white/70 mb-3">1. How would you rate the overall quality?</label>
+          <select id="s-rating"
+            class="w-full bg-black border border-white/30 rounded-2xl px-4 sm:px-5 py-3 text-white focus:outline-none text-sm">
+            <option>Excellent</option><option>Very Good</option><option>Good</option><option>Fair</option><option>Poor</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm text-white/70 mb-3">2. What improvements would you suggest?</label>
+          <textarea id="s-optimize"
+            class="w-full bg-black border border-white/30 rounded-2xl px-4 sm:px-5 py-3 text-white h-20 sm:h-24 focus:outline-none text-sm"
+            placeholder="Your suggestions..."></textarea>
+        </div>
+        <div>
+          <label class="block text-sm text-white/70 mb-3">3. Any new features you'd like to see?</label>
+          <textarea id="s-features"
+            class="w-full bg-black border border-white/30 rounded-2xl px-4 sm:px-5 py-3 text-white h-20 sm:h-24 focus:outline-none text-sm"
+            placeholder="Ideas for the future..."></textarea>
+        </div>
+        <button type="button" onclick="submitSurvey()"
+          class="w-full py-4 bg-white text-black font-medium tracking-[1.5px] rounded-2xl hover:bg-white/90 transition text-sm">
+          SUBMIT FEEDBACK
+        </button>
       </div>
-
-      <div>
-        <label class="block text-sm text-white/70 mb-3">1. How would you rate the overall quality?</label>
-        <select name="rating"
-          class="w-full bg-black border border-white/30 rounded-2xl px-4 sm:px-5 py-3 text-white focus:outline-none text-sm">
-          <option>Excellent</option><option>Very Good</option><option>Good</option><option>Fair</option><option>Poor</option>
-        </select>
-      </div>
-
-      <div>
-        <label class="block text-sm text-white/70 mb-3">2. What improvements would you suggest?</label>
-        <textarea name="improvements"
-          class="w-full bg-black border border-white/30 rounded-2xl px-4 sm:px-5 py-3 text-white h-20 sm:h-24 focus:outline-none text-sm"
-          placeholder="Your suggestions..."></textarea>
-      </div>
-
-      <div>
-        <label class="block text-sm text-white/70 mb-3">3. Any new features you'd like to see?</label>
-        <textarea name="features"
-          class="w-full bg-black border border-white/30 rounded-2xl px-4 sm:px-5 py-3 text-white h-20 sm:h-24 focus:outline-none text-sm"
-          placeholder="Ideas for the future..."></textarea>
-      </div>
-
-      <button type="submit"
-        class="w-full py-4 bg-white text-black font-medium tracking-[1.5px] rounded-2xl hover:bg-white/90 transition text-sm">
-        SUBMIT FEEDBACK
-      </button>
-
-    </form>
+    </div>
   </div>
-</div>
 
   <!-- ══════════════════════════════ SCRIPTS ══════════════════════════════ -->
   <script>
     /* ── DATES: dynamic, past dates auto-hidden ── */
     const allDates = [
-      { date: '2026-06-14', label: '---------------', venue: '-----'  },
-      { date: '2026-07-05', label: '---------------', venue: '-----'  },
-      { date: '2026-08-22', label: '---------------', venue: '-----'  },
-      { date: '2026-09-03', label: '---------------', venue: '-----'  },
-      { date: '2026-09-22', label: '---------------', venue: '-----'  },
+      { date: '2026-06-14', label: '14 JUN — AMSTERDAM', venue: 'Shelter'     },
+      { date: '2026-07-05', label: '05 JUL — BERLIN',    venue: 'Kater Blau'  },
+      { date: '2026-08-22', label: '22 AUG — BARCELONA', venue: 'Razzmatazz'  },
     ];
     function renderDates() {
       const now  = new Date();
@@ -506,11 +492,11 @@
       if (!name || !email || !message) { error.classList.remove('hidden'); return; }
       error.classList.add('hidden');
       // TODO: wire up real backend →
-      action="https://formspree.io/f/xvzylezv", {
-       method: 'POST',
-         headers: { 'Content-Type': 'application/json' },
-         body: JSON.stringify({ name, email, message })
-       });
+      // fetch('https://formspree.io/f/YOUR_ID', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ name, email, message })
+      // });
       document.getElementById('f-name').value    = '';
       document.getElementById('f-email').value   = '';
       document.getElementById('f-message').value = '';
