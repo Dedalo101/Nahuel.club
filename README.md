@@ -1,5 +1,5 @@
 Nahuel.club
-Official website for Nahuel Mendez Isla — DJ • Promoter • Selector • Art Director.
+Official website for Nahuel Mendez Isla —  VINYL DJ-sets . Sculpture-Photography-Painting.
 🌐 Live site: https://nahuel.club
 
 About Nahuel
