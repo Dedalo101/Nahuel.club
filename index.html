@@ -465,9 +465,11 @@
   <script>
     /* ── DATES: dynamic, past dates auto-hidden ── */
     const allDates = [
-      { date: '2026-06-14', label: '14 JUN — AMSTERDAM', venue: 'Shelter'     },
-      { date: '2026-07-05', label: '05 JUL — BERLIN',    venue: 'Kater Blau'  },
-      { date: '2026-08-22', label: '22 AUG — BARCELONA', venue: 'Razzmatazz'  },
+      { date: '2026-06-14', label: '---------------', venue: '-----'  },
+      { date: '2026-07-05', label: '---------------', venue: '-----'  },
+      { date: '2026-08-22', label: '---------------', venue: '-----'  },
+      { date: '2026-09-03', label: '---------------', venue: '-----'  },
+      { date: '2026-09-22', label: '---------------', venue: '-----'  },
     ];
     function renderDates() {
       const now  = new Date();
@@ -492,11 +494,11 @@
       if (!name || !email || !message) { error.classList.remove('hidden'); return; }
       error.classList.add('hidden');
       // TODO: wire up real backend →
-      // fetch('https://formspree.io/f/YOUR_ID', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify({ name, email, message })
-      // });
+      action="https://formspree.io/f/xvzylezv", {
+       method: 'POST',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify({ name, email, message })
+       });
       document.getElementById('f-name').value    = '';
       document.getElementById('f-email').value   = '';
       document.getElementById('f-message').value = '';
